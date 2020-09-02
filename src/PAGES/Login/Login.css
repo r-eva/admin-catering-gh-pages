@@ -1,0 +1,11 @@
+.background-image {
+    background: url('../../IMG/Login/bgimage.jpeg');
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+}
+
+.card-login {
+    width: 27rem;
+    height: 23em;
+}

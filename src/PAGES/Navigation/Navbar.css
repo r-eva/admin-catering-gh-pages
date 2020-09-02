@@ -1,0 +1,10 @@
+.nav-link:hover {
+    background-color: grey;
+}
+
+.position-navbar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
