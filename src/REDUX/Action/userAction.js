@@ -56,7 +56,6 @@ export const hitungConfirmation = () => {
                 type: 'HITUNG_CONFIRMATION',
                 jumlahConfirm: res.data.length
             })
-            console.log(res.data.length)
         })
         .catch((err) => {
             console.log(err)

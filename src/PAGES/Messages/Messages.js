@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import {Form} from 'react-bootstrap'
 
 // const socket = io.connect('http://localhost:1997')
