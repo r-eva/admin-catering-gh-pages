@@ -11,11 +11,18 @@ class Order extends Component {
         tanggalHariIni: moment().format("D MMMM YYYY"),
         tanggalDitambahkan: 0,
         detailPesananDipilih: null,
-        detailShow: false
+        detailShow: false,
+        getData: false
+    }
+
+    componentDidMount() {
+        this.getJumlahPesanan(moment().add(this.state.tanggalDitambahkan, 'days').format("YYYY-MM-DD").toString())
     }
 
     componentDidUpdate() {
-        this.getJumlahPesanan(moment().add(this.state.tanggalDitambahkan, 'days').format("YYYY-MM-DD").toString())
+        if (this.state.getData === false) {
+            this.getJumlahPesanan(moment().add(this.state.tanggalDitambahkan, 'days').format("YYYY-MM-DD").toString())
+        }
     }
 
     ////////////////////////////////////////////// GET DATA API ///////////////////////////////////////////////////
@@ -23,7 +30,7 @@ class Order extends Component {
     getJumlahPesanan = (tanggalJadwal) => {
         Axios.get(urlApi + 'jadwalAdmin/getJumlahPesananPerhari/' + tanggalJadwal)
         .then(res => {
-            this.setState({seluruhPesananHariIni: res.data})
+            this.setState({seluruhPesananHariIni: res.data, getData: true})
         }).catch(err => {
             console.log(err)
         })   
@@ -138,9 +145,9 @@ class Order extends Component {
                                             {
                                                 moment().add(this.state.tanggalDitambahkan - 1, 'days').format("dddd") === 'Sunday' 
                                                 ?
-                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan - 3})}>Back</button>
+                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan - 3, getData: false})}>Back</button>
                                                 :
-                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan - 1})}>Back</button>
+                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan - 1, getData: false})}>Back</button>
                                             }
                                             </>              
                                         }       
@@ -155,9 +162,9 @@ class Order extends Component {
                                             {
                                                 moment().add(this.state.tanggalDitambahkan + 1, 'days').format("dddd") === 'Saturday' 
                                                 ?
-                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan + 3})}>Next</button>
+                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan + 3, getData: false})}>Next</button>
                                                 :
-                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan + 1})}>Next</button>
+                                                <button className="btn btn-success btn-block p-1 m-0" onClick={() => this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan + 1, getData: false})}>Next</button>
                                             }
                                             </>
                                         }
@@ -183,7 +190,7 @@ class Order extends Component {
                             </tbody>
                             </Table>
                             :
-                            <h3 className="text-center h3-responsive mt-5">No Order</h3>
+                        <h3 className="text-center h3-responsive mt-5">No Order</h3>
                         }       
                     </div>
                 </div>  

@@ -26,8 +26,7 @@ class Selling extends Component {
         if(this.state.produkTerbaik.length !== 0) {
             return this.state.produkTerbaik.map(val => {
                 return (
-                    <tr key={val.idPaket} className='text-dark'>
-                        <td>{val.idPaket}</td>
+                    <tr key={val.namaPaket} className='text-dark'>
                         <td>{val.namaPaket}</td>
                         <td>{val.totalTerjual}</td>
                         <td>{val.jumlahTransaksi}</td>
@@ -52,7 +51,6 @@ class Selling extends Component {
                             <Table striped bordered hover className="text-center">
                                 <thead color="text-center text-white" style={{backgroundColor: '#0085C7'}}>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Package Name</th>
                                         <th>Total Sales</th>
                                         <th>Transaction Amount</th>

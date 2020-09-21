@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Axios from 'axios'
 import {urlApi} from '../../HELPERS/database'
 import moment from 'moment'
-import {Table} from 'react-bootstrap'
+import {Table, Spinner} from 'react-bootstrap'
 
 class LandingPage extends Component {
 
@@ -114,6 +114,13 @@ class LandingPage extends Component {
                 )
             })
             return jsx
+        } else {
+            return  <tr>
+                        <td colSpan="3" className = "text-center">
+                            <Spinner animation="border" variant="secondary"/>
+                        </td>
+                    </tr>
+
         }
     }
 

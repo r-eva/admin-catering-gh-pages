@@ -9,7 +9,9 @@ class Confirmation extends Component {
     state = {
         listTransaksiMenunggu: [],
         historyDetail: [],
-        modalShow: false
+        modalShow: false,
+        confirmPembayaranClicked: false,
+        rejectPembayaranClicked: false
     }
 
     componentDidMount(){
@@ -46,11 +48,13 @@ class Confirmation extends Component {
 
 
     confirmPembayaran = (id) => {
+        this.setState({confirmPembayaranClicked: true})
         Axios.put(urlApi + 'admin/confirmPembayaran/' + id)
         .then((res)=>{
-            window.location.reload()
+            // window.location.reload()
             this.getDataTransaksiMenunggu()
             swal ('Transaction confirmed!', `Please check list of order.`, 'success')
+            this.setState({confirmPembayaranClicked: false})
         })
         .catch((err) => {
             console.log(err)
@@ -58,14 +62,16 @@ class Confirmation extends Component {
     }
 
     rejectPembayaran = (id) => {
+        this.setState({rejectPembayaranClicked: true})
         Axios.put(urlApi + 'admin/rejectPembayaran/' + id)
         .then((res)=>{
-            window.location.reload()
+            // window.location.reload()
             this.getDataTransaksiMenunggu()
             swal({
                 icon: "success",
                 text: 'Transaction rejected!'
             })
+            this.setState({rejectPembayaranClicked: false})
         })
         .catch((err) => {
             console.log(err)
@@ -104,8 +110,19 @@ class Confirmation extends Component {
                             :
                             <td><input type="button" value="DETAIL" className="btn btn-info btn-block" onClick={() => this.getDetailHistory(val.id)}/></td>
                     }
-                    <td><input type="button" value="Confirm" className="btn btn-success btn-block" onClick={() => this.confirmPembayaran(val.id)}/></td>
-                    <td><input type="button" value="Reject" className="btn btn-danger btn-block" onClick={() => this.rejectPembayaran(val.id)}/></td>
+                    {
+                        this.state.confirmPembayaranClicked || this.state.rejectPembayaranClicked
+                        ?
+                        <>
+                            <td><input type="button" value="Confirm" className="btn btn-success btn-block"/></td>
+                            <td><input type="button" value="Reject" className="btn btn-danger btn-block"/></td>
+                        </>
+                        :
+                        <>
+                            <td><input type="button" value="Confirm" className="btn btn-success btn-block" onClick={() => this.confirmPembayaran(val.id)}/></td>
+                            <td><input type="button" value="Reject" className="btn btn-danger btn-block" onClick={() => this.rejectPembayaran(val.id)}/></td>
+                        </>
+                    }
                 </tr>
             )
         })
@@ -169,8 +186,8 @@ class Confirmation extends Component {
                             this.state.listTransaksiMenunggu.length > 0
                             ?
                             <Table className="text-white" striped bordered hover>
-                                <thead color="text-center text-white" style={{backgroundColor: '#0085C7'}}>
-                                    <tr>
+                                <thead color="text-white" style={{backgroundColor: '#0085C7'}}>
+                                    <tr className="text-center">
                                         <th>UserId/Name</th>
                                         <th>Transaction Date</th>
                                         <th>Total</th>
