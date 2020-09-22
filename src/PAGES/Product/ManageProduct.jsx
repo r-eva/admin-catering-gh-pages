@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Axios from 'axios'
 import { urlApi } from '../../HELPERS/database'
+import {connect} from 'react-redux'
 import ManagePaketBaru from './NewProduct'
 import swal from 'sweetalert'
-import { Table, Button, Modal, Form } from 'react-bootstrap'
+import { Table, Button, Modal, Form, Spinner } from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import { updateDone } from '../../REDUX/Action/ManageProduct'
 
 class LanggananAdmin extends Component {
     state = {
@@ -27,7 +29,15 @@ class LanggananAdmin extends Component {
         listAllMenuTambahJadwal: null,
         selectedNewMenu: null,
         inputNamaMenuBaru: '',
-        inputDeskripsiMenu: ''
+        inputDeskripsiMenu: '',
+        updatePaket: false,
+        onBtnDeletePaketClick: false,
+        onBtnSaveUpdateClick: false,
+        onBtnEditImageLanggananClick: false,
+        tambahJadwalMenuBaruClick: false,
+        tambahMenuDanJadwalClick: false,
+        deleteJadwalClick: false,
+        updateJadwalLanggananClick: false
     }
 
     toggle = nr => () => {
@@ -41,12 +51,20 @@ class LanggananAdmin extends Component {
         this.getDataPaket()
     }
 
+    componentDidUpdate(){
+        if (this.props.update !== this.state.updatePaket) {
+            this.getDataPaket()
+        }
+    }
+
     getDataPaket = () => {
         Axios.get(urlApi + 'langganan/getKategoriLangganan')
         .then((res) => {
-            this.setState({listPaket: res.data})
+            this.setState({listPaket: res.data, updatePaket: false})
+            this.props.updateDone()
         }).catch((err) => {
             console.log(err)
+            this.setState({updatePaket: false})
         })
     }
 
@@ -123,6 +141,7 @@ class LanggananAdmin extends Component {
     }
 
     onBtnEditImageLanggananClick = (id) => {
+        this.setState({onBtnEditImageLanggananClick: true})
         if(this.state.imageLanggananNew) {
             var formdata = new FormData();
 
@@ -138,6 +157,7 @@ class LanggananAdmin extends Component {
                 .then(res => {
                     this.detailProductClicked(...res.data)
                     this.getDataPaket()
+                    this.setState({onBtnEditImageLanggananClick: false})
                 }).catch(err => {
                     console.log(err.response)
                 })
@@ -147,6 +167,7 @@ class LanggananAdmin extends Component {
     }
 
     saveEditingLangganan = (objSelected) => {
+        this.setState({onBtnSaveUpdateClick: true})
        var obj = {
            namaPaket: this.state.inputNamaPaketEdit ? this.state.inputNamaPaketEdit : objSelected.namaPaket,
            harga: this.state.inputHargaEdit ? parseInt(this.state.inputHargaEdit) : objSelected.harga,
@@ -159,7 +180,7 @@ class LanggananAdmin extends Component {
        Axios.put(urlApi + 'langganan/editLanggananById/' + objSelected.id, obj)
        .then((res) => {
             this.getDataPaket()
-            this.setState({boxDetail: false, selectedProduct: null, editImageClick: 0})      
+            this.setState({boxDetail: false, selectedProduct: null, editImageClick: 0, onBtnSaveUpdateClick: false})      
        })
        .catch((err) => {
            console.log(err)
@@ -176,7 +197,7 @@ class LanggananAdmin extends Component {
           })
           .then((willDelete) => {
             if (willDelete) {
-
+                this.setState({onBtnDeletePaketClick: true})
                 var deleteObj = {
                     data: {
                         idLangganan: idPaket,
@@ -190,48 +211,56 @@ class LanggananAdmin extends Component {
                 Axios.delete(urlApi + 'langganan/hapusPaketLangganan/', deleteObj)
                 .then((res)=>{
                     this.getDataPaket()
-                    this.setState({boxDetail: false, selectedProduct: null, editImageClick: 0})
+                    this.setState({boxDetail: false, selectedProduct: null, editImageClick: 0, onBtnDeletePaketClick: false})
                     swal("Congratulation! This package has been deleted!", {
                         icon: "success",
                     });
                 }).catch((err)=> {
                     if (err.response.data.message) {
+                        this.setState({onBtnDeletePaketClick: false})
                         swal ('Eror', `${err.response.data.message}`, 'error')
                     } else {
+                        this.setState({onBtnDeletePaketClick: false})
                         console.log(err)
                     }
                 })
             } else {
-              swal("Your package has not been deleted.");
+                this.setState({onBtnDeletePaketClick: false})
+                swal("Your package has not been deleted.");
             }
         })
     }
 
     updateJadwalLangganan = (menuBaru, idConnectionTable) => {
+        this.setState({updateJadwalLanggananClick: true})
         Axios.put(urlApi + 'jadwal/editJadwalById', {
             idMenuBaru: menuBaru,
             idConnection: idConnectionTable
         })
         .then((res)=>{
             this.detailProductClicked(this.state.selectedProduct)
-            this.setState({selectedEditJadwalId: 0})
+            this.setState({selectedEditJadwalId: 0, updateJadwalLanggananClick: false})
         }).catch((err)=> {
             console.log(err)
         })
     }
 
     deleteJadwal = (idConnection) => {
+        this.setState({deleteJadwalClick: true})
         Axios.delete(urlApi + 'jadwal/deleteJadwalById/' + idConnection)
         .then((res)=>{
             this.detailProductClicked(this.state.selectedProduct)
-            this.setState({selectedEditJadwalId: 0})
+            this.setState({selectedEditJadwalId: 0, deleteJadwalClick: false})
         }).catch((err)=> {
             console.log(err)
+            this.setState({selectedEditJadwalId: 0, deleteJadwalClick: false})
         })
     }
 
     tambahJadwalMenuBaru = () => {
+        this.setState({tambahJadwalMenuBaruClick: true})
         if (this.state.selectedNewMenu === '' || this.state.selectedNewMenu === null) {
+            this.setState({tambahJadwalMenuBaruClick: false})
             swal ('Eror', `Please complete all data required!`, 'error')
         } else {
             var obj = {
@@ -243,7 +272,7 @@ class LanggananAdmin extends Component {
             Axios.post(urlApi + 'jadwal/addConnection/', obj)
                 .then((res)=>{
                     this.detailProductClicked(this.state.selectedProduct)
-                    this.setState({tambahJadwalClick: false, selectedNewMenu: null})
+                    this.setState({tambahJadwalClick: false, selectedNewMenu: null, tambahJadwalMenuBaruClick: false})
                 }).catch((err)=> {
                     console.log(err)
                 })
@@ -251,8 +280,10 @@ class LanggananAdmin extends Component {
         }
 
     tambahMenuDanJadwal = () => {
+        this.setState({tambahMenuDanJadwalClick: true})
         if (this.state.inputNamaMenuBaru === '' || this.state.inputDeskripsiMenu === '') {
             swal ('Eror', `Please complete all data required!`, 'error')
+            this.setState({tambahMenuDanJadwalClick: false})
         } else {
             var obj = {
                 Menu: this.state.inputNamaMenuBaru,
@@ -263,12 +294,14 @@ class LanggananAdmin extends Component {
             Axios.post(urlApi + 'jadwal/addMenuBaruDanConnection', obj)
             .then((res)=>{
                 this.detailProductClicked(this.state.selectedProduct)
-                this.setState({inputNamaMenuBaru: '', inputDeskripsiMenu: ''})
+                this.setState({inputNamaMenuBaru: '', inputDeskripsiMenu: '', tambahMenuDanJadwalClick: false})
             }).catch((err)=> {
                 if (err.response.data.message) {
                     swal ('Eror', `${err.response.data.message}`, 'error')
+                    this.setState({tambahMenuDanJadwalClick: false})
                 } else {
                     console.log(err)
+                    this.setState({tambahMenuDanJadwalClick: false})
                 }
             })
         }
@@ -328,8 +361,14 @@ class LanggananAdmin extends Component {
                                                         {this.renderPilihanMenuUntukTambah()}
                                                     </select>
                                                 </div>
-                                                <div className="col-8 my-3">
-                                                    <Button variant="success" onClick={this.tambahJadwalMenuBaru}>ADD SCHEDULE</Button>
+                                                <div className="col-8 my-3 text-center">
+                                                    {
+                                                        this.state.tambahJadwalMenuBaruClick
+                                                        ?
+                                                        <Spinner animation="border" variant="secondary"/>
+                                                        :
+                                                        <Button variant="success" onClick={this.tambahJadwalMenuBaru}>ADD SCHEDULE</Button>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -343,7 +382,15 @@ class LanggananAdmin extends Component {
                                     <input placeholder="Input Menu Name" type="text" id="inputPlaceholderEx" className="form-control mb-3" onChange={(e) => this.setState({inputNamaMenuBaru: e.target.value})}/>
                                     <label htmlFor="inputDescriptionNew">Description</label>
                                     <Form.Control as="textarea" placeholder="Input Description" id="inputDescriptionNew" onChange={(e) => this.setState({inputDeskripsiMenu: e.target.value})}></Form.Control>
-                                    <Button className="mt-3" variant="success" onClick={this.tambahMenuDanJadwal}>Add Schedule</Button>
+                                    {
+                                        this.state.tambahMenuDanJadwalClick
+                                        ?
+                                        <center>
+                                        <Spinner animation="border" variant="secondary" className="mt-3"/>
+                                        </center>
+                                        :
+                                        <Button className="mt-3" variant="success" onClick={this.tambahMenuDanJadwal}>Add Schedule</Button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -402,9 +449,18 @@ class LanggananAdmin extends Component {
                             ?
                             <td><h6>Cant be deleted, please add one more menu.</h6></td>
                             :
-                            <td><input type="button" className='btn btn-danger' value="Delete" onClick={() => this.deleteJadwal(val.id)}/></td>
+                            <>
+                            {
+                                this.state.deleteJadwalClick
+                                ?
+                                <td>
+                                    <Spinner animation="border" variant="secondary"/>
+                                </td>
+                                :
+                                <td><input type="button" className='btn btn-danger' value="Delete" onClick={() => this.deleteJadwal(val.id)}/></td>
+                            }
+                            </>
                         }
-                        
                     </tr>
                 )
             }
@@ -418,7 +474,13 @@ class LanggananAdmin extends Component {
                     </td>
                     <td>{val.urutan}</td>
                     <td><input type="button" className='btn btn-danger' value="Cancel" onClick={() => this.setState({selectedEditJadwalId: 0})}/></td>
-                    <td><input type="button" className='btn btn-success' value="Save" onClick={()=> this.updateJadwalLangganan(this.state.selectedNewMenuEdit, this.state.selectedEditJadwalId)}/></td>
+                    {
+                        this.state.updateJadwalLanggananClick
+                        ?
+                        <td><Spinner animation="border" variant="secondary"/></td>
+                        :
+                        <td><input type="button" className='btn btn-success' value="Save" onClick={()=> this.updateJadwalLangganan(this.state.selectedNewMenuEdit, this.state.selectedEditJadwalId)}/></td>
+                    }
                 </tr>
             )
         })
@@ -543,7 +605,7 @@ class LanggananAdmin extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="row">
-                                                    <div className="col-12">
+                                                    <div className="col-12 text-center">
                                                         {
                                                             this.state.editImageClick === 0
                                                             ?
@@ -555,7 +617,15 @@ class LanggananAdmin extends Component {
                                                                         ?
                                                                         <input type="button" value="Upload New Image" className="btn btn-info btn-block" onClick={() => this.onBtnAddImageLanggananClick(this.state.selectedProduct.id)} />
                                                                         :
-                                                                        <input type="button" value="Upload Edit Image" className="btn btn-info btn-block mb-3" onClick={() => this.onBtnEditImageLanggananClick(this.state.selectedProduct.id)} />
+                                                                        <>
+                                                                        {
+                                                                            this.state.onBtnEditImageLanggananClick
+                                                                            ?
+                                                                            <Spinner animation="border" variant="secondary"/>
+                                                                            :
+                                                                            <input type="button" value="Upload Edit Image" className="btn btn-info btn-block mb-3" onClick={() => this.onBtnEditImageLanggananClick(this.state.selectedProduct.id)} />
+                                                                        }
+                                                                        </>
                                                                     }
                                                                 </>  
                                                         }
@@ -614,13 +684,41 @@ class LanggananAdmin extends Component {
                                             </div>
                                         </div>
                                         <div className="row mb-4 ml-3 mr-4">
-                                            <div className="col-12">
-                                                <input type="button" value="DELETE THIS PACKAGE" className="btn btn-danger btn-block font-weight-bolder" onClick={() => this.onBtnDeletePaketClick(this.state.selectedProduct.id, this.state.listJadwal)}/>
+                                            <div className="col-12 text-center">
+                                                {
+                                                    this.state.onBtnDeletePaketClick
+                                                    ?
+                                                    <Spinner animation="border" variant="secondary"/>
+                                                    :
+                                                    <>
+                                                    {
+                                                        this.state.onBtnSaveUpdateClick
+                                                        ?
+                                                        <input type="button" value="DELETE THIS PACKAGE" className="btn btn-danger btn-block font-weight-bolder"/>
+                                                        :
+                                                        <input type="button" value="DELETE THIS PACKAGE" className="btn btn-danger btn-block font-weight-bolder" onClick={() => this.onBtnDeletePaketClick(this.state.selectedProduct.id, this.state.listJadwal)}/>
+                                                    }
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                         <div className="row mb-4 ml-3 mr-4">
-                                            <div className="col-12">
-                                                <input type="button" value="SAVE UPDATE PRODUCT" className="btn btn-success btn-block font-weight-bolder" onClick={() => this.saveEditingLangganan(this.state.selectedProduct)}/>
+                                            <div className="col-12 text-center">
+                                                {
+                                                    this.state.onBtnSaveUpdateClick
+                                                    ?
+                                                    <Spinner animation="border" variant="secondary"/>
+                                                    :
+                                                    <>
+                                                    {
+                                                        this.state.onBtnDeletePaketClick
+                                                        ?
+                                                        <input type="button" value="SAVE UPDATE PRODUCT" className="btn btn-success btn-block font-weight-bolder"/>
+                                                        :
+                                                        <input type="button" value="SAVE UPDATE PRODUCT" className="btn btn-success btn-block font-weight-bolder" onClick={() => this.saveEditingLangganan(this.state.selectedProduct)}/>
+                                                    }
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -656,4 +754,10 @@ class LanggananAdmin extends Component {
     }
 }
 
-export default LanggananAdmin;
+const mapStateToProps = (state) => {
+    return {
+        update: state.packageChecker.updatePackage,
+    }
+}
+
+export default connect(mapStateToProps, {updateDone})(LanggananAdmin);

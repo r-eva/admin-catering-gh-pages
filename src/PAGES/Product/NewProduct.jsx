@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { urlApi } from '../../HELPERS/database'
 import Axios from 'axios'
-import {Button, Form} from 'react-bootstrap'
+import {connect} from 'react-redux'
+import {updateSubscribe} from '../../REDUX/Action/ManageProduct'
+import {Button, Form, Spinner} from 'react-bootstrap'
 import swal from 'sweetalert'
 
 class ManagePaketBaru extends Component {
@@ -17,7 +19,8 @@ class ManagePaketBaru extends Component {
         listAllMenuTambahJadwal: [],
         inputNamaMenuBaru: '',
         inputDeskripsiMenu: '',
-        selectedNewMenu: ''
+        selectedNewMenu: '',
+        tambahPaketClicked: false
     }
 
     ////////////////////////////////////////GET VALUE INPUT //////////////////////////////////////
@@ -48,6 +51,7 @@ class ManagePaketBaru extends Component {
     ///////////////////////////////////////////FUNCTION TO BACKEND //////////////////////////////////////77
 
     tambahPaketLanggananDanJadwal = () => {
+        this.setState({tambahPaketClicked: true})
         var data
         var formdata
         var options
@@ -79,20 +83,18 @@ class ManagePaketBaru extends Component {
                         inputNamaPaketAdd: false, inputHargaAdd: false, inputDiscountAdd: false,
                         inputDeskripsAdd: false, imageLanggananAdd: false, tambahJadwal: false,
                         tambahJadwalDariMenuClick: false, listAllMenuTambahJadwal: [],
-                        inputNamaMenuBaru: '', inputDeskripsiMenu: '', selectedNewMenu: ''
+                        inputNamaMenuBaru: '', inputDeskripsiMenu: '', selectedNewMenu: '', tambahPaketClicked: false
                     })
-                    swal ({
-                        icon: "success",
-                        buttons: false,
-                        text: "Package has been add!"
-                    })
-                    window.location.reload()
+                    swal ("Congratulation!", "Package has been added!", "success")
+                    this.props.updateSubscribe()
                 }).catch((err) => {
+                    this.setState({tambahPaketClicked: false})
                     swal ('Eror', `${err.response.data.message}`, 'error')
                     console.log(err)
                 })
     
             } else {
+                this.setState({tambahPaketClicked: false})
                 swal ('Eror', 'Please complete all data required!', 'error')
             }
 
@@ -126,20 +128,18 @@ class ManagePaketBaru extends Component {
                         inputNamaPaketAdd: false, inputHargaAdd: false, inputDiscountAdd: false,
                         inputDeskripsAdd: false, imageLanggananAdd: false, tambahJadwal: false,
                         tambahJadwalDariMenuClick: false, listAllMenuTambahJadwal: [],
-                        inputNamaMenuBaru: '', inputDeskripsiMenu: '', selectedNewMenu: ''
+                        inputNamaMenuBaru: '', inputDeskripsiMenu: '', selectedNewMenu: '', tambahPaketClicked: false
                     })
-                    swal ({
-                        icon: "success",
-                        buttons: false,
-                        text: "Package has been add!"
-                    })
-                    window.location.reload()
+                    swal ("Congratulation!", "Package has been added!", "success")
+                    this.props.updateSubscribe()
                 }).catch((err) => {
+                    this.setState({tambahPaketClicked: false})
                     swal ('Eror', `${err.response.data.message}`, 'error')
                     console.log(err)
                 })
 
             } else {
+                this.setState({tambahPaketClicked: false})
                 swal ('Eror', 'Please input all data required!', 'error')
             }
         }
@@ -167,21 +167,21 @@ class ManagePaketBaru extends Component {
                                     <div className="row justify-content-center">
                                         <div className="col-12 col-md-4">
                                             <label htmlFor="inputNameProduct">Name</label>
-                                            <input placeholder="Input Package Name" type="text" id="inputNameProduct" className="form-control"  onChange={(e) => this.setState({inputNamaPaketAdd: e.target.value})}/>
+                                            <input placeholder="Input Package Name" type="text" id="inputProduct1" className="form-control"  onChange={(e) => this.setState({inputNamaPaketAdd: e.target.value})}/>
                                         </div>
                                         <div className="col-6 col-md-4">
                                             <label htmlFor="inputPriceProduct">Price</label>
-                                            <input placeholder="Input Package Price" type="number" id="inputPriceProduct" className="form-control" onChange={(e)=> this.setState({inputHargaAdd: parseInt(e.target.value)})}/>
+                                            <input placeholder="Input Package Price" type="number" id="inputProduct2" className="form-control" onChange={(e)=> this.setState({inputHargaAdd: parseInt(e.target.value)})}/>
                                         </div>
                                         <div className="col-6 col-md-4">
                                             <label htmlFor="inputDiscountProduct">Discount (in percentage)</label>
-                                            <input placeholder="Input Package Discount (optional)" type="number" id="inputDiscountProduct" className="form-control" onChange={(e) => this.setState({inputDiscountAdd: e.target.value})}/>
+                                            <input placeholder="Input Package Discount (optional)" type="number" id="inputProduct3" className="form-control" onChange={(e) => this.setState({inputDiscountAdd: e.target.value})}/>
                                         </div>
                                     </div>
                                     <div className="row justify-content-center mt-4">
                                         <div className="col-4">
                                                 <h6 className="mb-2">Description</h6>
-                                                <Form.Control as="textarea" rows="3" placeholder="Input Package Description" onChange={(e)=> this.setState({inputDeskripsiAdd: e.target.value})}/>
+                                                <Form.Control as="textarea" rows="3" placeholder="Input Package Description" id="inputProduct4" onChange={(e)=> this.setState({inputDeskripsiAdd: e.target.value})}/>
                                         </div>
                                         <div className="col-4">
                                             <h6 className="mb-2">Category</h6>
@@ -248,10 +248,8 @@ class ManagePaketBaru extends Component {
                                                                             <div className="col-12">
                                                                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                                                                     <Form.Label>Description</Form.Label>
-                                                                                    <Form.Control as="textarea" rows="3" placeholder="Input Menu Description" outline onChange={(e) => this.setState({inputDeskripsiMenu: e.target.value})}/>
+                                                                                    <Form.Control as="textarea" rows="3" placeholder="Input Menu Description" onChange={(e) => this.setState({inputDeskripsiMenu: e.target.value})}/>
                                                                                 </Form.Group>
-                                                                                {/* <h6 style={{marginBottom: -10}}>Description</h6>
-                                                                                <textarea className="form-control" placeholder="Input Menu Description" outline onChange={(e) => this.setState({inputDeskripsiMenu: e.target.value})}></textarea> */}
                                                                             </div>   
                                                                         </div>
                                                                     </div>
@@ -278,8 +276,15 @@ class ManagePaketBaru extends Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-12 my-3">
-                                            <Button variant="success" className="btn btn-block" onClick={this.tambahPaketLanggananDanJadwal}>ADD PACKAGE</Button>
+                                        <div className="col-12 my-3 text-center">
+                                            {
+                                                this.state.tambahPaketClicked
+                                                ?
+                                                <Spinner animation="border" variant="secondary"/>
+                                                :
+                                                // <input className="btn btn-block btn-success" type="reset" value="ADD PACKAGE"></input>
+                                                <Button variant="success" className="btn btn-block" onClick={this.tambahPaketLanggananDanJadwal}>ADD PACKAGE</Button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -291,4 +296,4 @@ class ManagePaketBaru extends Component {
     }
 }
 
-export default ManagePaketBaru;
+export default connect(null, {updateSubscribe})(ManagePaketBaru);
