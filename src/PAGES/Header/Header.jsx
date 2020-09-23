@@ -54,7 +54,8 @@ class Header extends Component {
                 <div>
                     <OverlayTrigger placement="bottom" delay={{ show: 100, hide: 200 }} overlay={<Tooltip id="tooltip-bottom">Inbox</Tooltip>}>
                         <Link to="/message" className="text-dark">
-                            <span className="ml-3 mr-2 fa-stack" data-count={this.props.jumlahConfirm}>
+                            <span className="ml-3 mr-2 fa-stack">
+                            {/* <span className="ml-3 mr-2 fa-stack" data-count={this.props.jumlahConfirm}> */}
                                 <FontAwesomeIcon icon={faEnvelope} className="text-white fa-stack-2x"/>
                             </span>
                         </Link>

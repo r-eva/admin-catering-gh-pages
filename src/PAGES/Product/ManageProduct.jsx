@@ -284,6 +284,7 @@ class LanggananAdmin extends Component {
         if (this.state.inputNamaMenuBaru === '' || this.state.inputDeskripsiMenu === '') {
             swal ('Eror', `Please complete all data required!`, 'error')
             this.setState({tambahMenuDanJadwalClick: false})
+            this.resetFunction()
         } else {
             var obj = {
                 Menu: this.state.inputNamaMenuBaru,
@@ -294,17 +295,24 @@ class LanggananAdmin extends Component {
             Axios.post(urlApi + 'jadwal/addMenuBaruDanConnection', obj)
             .then((res)=>{
                 this.detailProductClicked(this.state.selectedProduct)
+                this.resetFunction()
                 this.setState({inputNamaMenuBaru: '', inputDeskripsiMenu: '', tambahMenuDanJadwalClick: false})
             }).catch((err)=> {
                 if (err.response.data.message) {
                     swal ('Eror', `${err.response.data.message}`, 'error')
+                    this.resetFunction()
                     this.setState({tambahMenuDanJadwalClick: false})
                 } else {
                     console.log(err)
+                    this.resetFunction()
                     this.setState({tambahMenuDanJadwalClick: false})
                 }
             })
         }
+    }
+
+    resetFunction = () => {
+        document.getElementById("newProductModalForm").reset()
     }
 
     /////////////////////////////////////////MODAL FUNCTION///////////////////////////////////////////////////////////
@@ -376,7 +384,7 @@ class LanggananAdmin extends Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-12 mt-3">
+                                <form className="col-12 mt-3" id="newProductModalForm">
                                     <p className="font-weight-bold">NEW MENU</p>
                                     <label htmlFor="inputPlaceholderEx">Menu Name</label>
                                     <input placeholder="Input Menu Name" type="text" id="inputPlaceholderEx" className="form-control mb-3" onChange={(e) => this.setState({inputNamaMenuBaru: e.target.value})}/>
@@ -391,7 +399,7 @@ class LanggananAdmin extends Component {
                                         :
                                         <Button className="mt-3" variant="success" onClick={this.tambahMenuDanJadwal}>Add Schedule</Button>
                                     }
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

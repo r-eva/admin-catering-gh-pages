@@ -86,16 +86,19 @@ class ManagePaketBaru extends Component {
                         inputNamaMenuBaru: '', inputDeskripsiMenu: '', selectedNewMenu: '', tambahPaketClicked: false
                     })
                     swal ("Congratulation!", "Package has been added!", "success")
+                    this.resetFunction()
                     this.props.updateSubscribe()
                 }).catch((err) => {
                     this.setState({tambahPaketClicked: false})
                     swal ('Eror', `${err.response.data.message}`, 'error')
+                    this.resetFunction()
                     console.log(err)
                 })
     
             } else {
                 this.setState({tambahPaketClicked: false})
-                swal ('Eror', 'Please complete all data required!', 'error')
+                swal ('Eror', 'Please complete all data required and add one schedule!', 'error')
+                this.resetFunction()
             }
 
         } else {
@@ -131,18 +134,25 @@ class ManagePaketBaru extends Component {
                         inputNamaMenuBaru: '', inputDeskripsiMenu: '', selectedNewMenu: '', tambahPaketClicked: false
                     })
                     swal ("Congratulation!", "Package has been added!", "success")
+                    this.resetFunction()
                     this.props.updateSubscribe()
                 }).catch((err) => {
                     this.setState({tambahPaketClicked: false})
                     swal ('Eror', `${err.response.data.message}`, 'error')
+                    this.resetFunction()
                     console.log(err)
                 })
 
             } else {
                 this.setState({tambahPaketClicked: false})
-                swal ('Eror', 'Please input all data required!', 'error')
+                swal ('Eror', 'Please input all data required and add one schedule!', 'error')
+                this.resetFunction()
             }
         }
+    }
+
+    resetFunction = () => {
+        document.getElementById("newProductForm").reset()
     }
 
     /////////////////////////////////////////// RENDER FUNCTION ///////////////////////////////////////////
@@ -163,7 +173,7 @@ class ManagePaketBaru extends Component {
                                 <div className="card-header text-center" style={{backgroundColor: '#E32E89'}}>
                                     <h3>ADD PACKAGE</h3>
                                 </div>
-                                <div className="card-body mx-3">
+                                <form className="card-body mx-3" id="newProductForm">
                                     <div className="row justify-content-center">
                                         <div className="col-12 col-md-4">
                                             <label htmlFor="inputNameProduct">Name</label>
@@ -287,7 +297,7 @@ class ManagePaketBaru extends Component {
                                             }
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

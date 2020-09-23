@@ -28,7 +28,6 @@ class User extends Component {
         Axios.get(urlApi + 'pesanan/daftarUserTerbaik')
         .then(res => {
             this.setState({daftarUserTerbaik: res.data})
-            console.log(this.state.daftarUserTerbaik)
         }).catch(err => {
             console.log(err)
         })

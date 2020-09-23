@@ -65,16 +65,6 @@ class LandingPage extends Component {
                                 }
                             }
                         }
-                        // console.log(ubahJadwal)
-                        // console.log(ubahJadwal[1][1])
-                        // console.log(ubahJadwal[1][1]["id"])
-
-                        // for (var x = 0; x < ubahJadwal.length; x++) {
-                        //     var sortJadwal = []
-                        //     for (var y = 0; y < ubahJadwal[x].length; y++) {
-                        //         sortJadwal.push(ubahJadwal[x][y])
-                        //     }
-                        // }
 
                         this.setState({allJadwalLangganan: ubahJadwal})
                     }
@@ -104,10 +94,10 @@ class LandingPage extends Component {
 
     renderJadwalMemasak = () => {
         if (this.state.allJadwalLangganan.length !== 0) {
-            var jsx = this.state.allJadwalLangganan[this.state.tanggalDitambahkan].map(val => {
+            var jsx = this.state.allJadwalLangganan[this.state.tanggalDitambahkan].map((val, idx) => {
                 return (
                     <tr key={val.id} className="text-center">
-                        <td>{val.id}</td>
+                        <td>{idx + 1}</td>
                         <td>{val.namaPaket}</td>
                         <td>{val.Menu}</td>
                     </tr>
@@ -185,7 +175,7 @@ class LandingPage extends Component {
                                             <Table striped bordered hover>
                                                 <thead className="text-center text-white" style={{backgroundColor: '#60217B'}}>
                                                     <tr>
-                                                        <th>Id</th>
+                                                        <th>No.</th>
                                                         <th>Package</th>
                                                         <th>Menu</th>
                                                     </tr>
