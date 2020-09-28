@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {urlApi} from '../../HELPERS/database'
 import Axios from 'axios'
 import swal from 'sweetalert'
+import {connect} from 'react-redux'
+import {hitungConfirmation} from '../../REDUX/Action/userAction'
 import {Table, Modal, Button} from 'react-bootstrap'
 
 class Confirmation extends Component {
@@ -53,6 +55,7 @@ class Confirmation extends Component {
         .then((res)=>{
             // window.location.reload()
             this.getDataTransaksiMenunggu()
+            this.props.hitungConfirmation()
             swal ('Transaction confirmed!', `Please check list of order.`, 'success')
             this.setState({confirmPembayaranClicked: false})
         })
@@ -67,6 +70,7 @@ class Confirmation extends Component {
         .then((res)=>{
             // window.location.reload()
             this.getDataTransaksiMenunggu()
+            this.props.hitungConfirmation()
             swal({
                 icon: "success",
                 text: 'Transaction rejected!'
@@ -96,6 +100,7 @@ class Confirmation extends Component {
                             this.state.modalShow === true 
                             ?
                             <>
+                                <td><input type="button" value="DETAIL" className="btn btn-info btn-block" /></td>
                                 {this.renderModal(
                                     {
                                         show: this.state.modalShow,
@@ -211,4 +216,5 @@ class Confirmation extends Component {
     }
 }
 
-export default Confirmation;
+
+export default connect(null, {hitungConfirmation})(Confirmation);

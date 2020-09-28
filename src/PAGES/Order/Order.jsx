@@ -69,6 +69,7 @@ class Order extends Component {
                             this.state.detailShow === true
                             ?
                             <>
+                                <td><input type="button" className='btn btn-info' value="Detail"/></td>
                                 {this.renderModal(
                                     {
                                         show: this.state.detailShow,
@@ -176,7 +177,7 @@ class Order extends Component {
                             this.state.seluruhPesananHariIni.length > 0
                             ?
                             <Table striped bordered hover className="mt-4">
-                            <thead color="text-white" style={{backgroundColor: '#60217B'}} className="text-center">
+                            <thead style={{backgroundColor: '#60217B'}} className="text-center text-white">
                                 <tr>
                                     <th>Package</th>
                                     <th>Start</th>
