@@ -106,13 +106,13 @@ class Order extends Component {
             </Modal.Header>
             <Modal.Body>
                 <p> Username: {this.state.detailPesananDipilih.username} <br/>
-                    Nama Paket: {this.state.detailPesananDipilih.namaPaket} <br/>
-                    Jumlah Box: {this.state.detailPesananDipilih.JumlahBox} <br/>
-                    Tanggal Mulai Langganan: {this.state.detailPesananDipilih.TanggalMulai} <br/>
-                    Tanggal Berakhir: {this.state.detailPesananDipilih.TanggalBerakhir} <br/>
-                    Penerima: {this.state.detailPesananDipilih.NamaPenerima} <br/>
-                    Alamat Penerima: {this.state.detailPesananDipilih.AlamatPenerima} <br/>
-                    Kode pos: {this.state.detailPesananDipilih.KodePosPenerima}
+                    Package Name: {this.state.detailPesananDipilih.namaPaket} <br/>
+                    Qty: {this.state.detailPesananDipilih.JumlahBox} <br/>
+                    Start Date: {this.state.detailPesananDipilih.TanggalMulai} <br/>
+                    End Date: {this.state.detailPesananDipilih.TanggalBerakhir} <br/>
+                    Recipient's Name: {this.state.detailPesananDipilih.NamaPenerima} <br/>
+                    Address: {this.state.detailPesananDipilih.AlamatPenerima} <br/>
+                    Postal Code: {this.state.detailPesananDipilih.KodePosPenerima}
                 </p>
             </Modal.Body>
             <Modal.Footer>

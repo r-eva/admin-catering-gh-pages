@@ -148,7 +148,25 @@ class Confirmation extends Component {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {this.renderHistoryDetail()}
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                        <th>No.</th>
+                        <th>Package</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Qty</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Duration</th>
+                        <th>Total</th>
+                        <th>Delivery</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.renderHistoryDetail()}
+                    </tbody>
+                </Table>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}>CLOSE</Button>
@@ -160,17 +178,18 @@ class Confirmation extends Component {
     renderHistoryDetail = () => {
         var jsx = this.state.historyDetail.map((val, idx) => {
             return (
-                    <div key = {val.id} >
-                        <p>{idx + 1}. Paket {val.namaPaket} <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Harga: {val.harga} <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Diskon: {val.discount} <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Jumlah Box: {val.JumlahBox} <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Tanggal Mulai: {val.TanggalMulai.slice(0, 10)} <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Tanggal Berakhir: {val.TanggalBerakhir.slice(0, 10)} <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Durasi: {val.Durasi} hari<br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Subtotal: {val.Durasi * val.JumlahBox * (val.harga - (val.harga * val.discount/100))} <br/>
-                        </p>
-                    </div>      
+                    <tr key = {val.id}>
+                        <td>{idx + 1 }</td>
+                        <td>{val.namaPaket}</td>
+                        <td>{val.harga}</td>
+                        <td>{val.discount}</td>
+                        <td>{val.JumlahBox}</td>
+                        <td>{val.TanggalMulai.slice(0, 10)}</td>
+                        <td>{val.TanggalBerakhir.slice(0, 10)}</td>
+                        <td>{val.Durasi}</td>
+                        <td>{val.Durasi * val.JumlahBox * (val.harga - (val.harga * val.discount/100))}</td>
+                        <td>{val.AlamatPenerima}</td>
+                    </tr>
                     )
         })
         return jsx
