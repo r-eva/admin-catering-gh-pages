@@ -631,7 +631,7 @@ class LanggananAdmin extends Component {
                                                                             ?
                                                                             <Spinner animation="border" variant="secondary"/>
                                                                             :
-                                                                            <input type="button" value="Upload Edit Image" className="btn btn-info btn-block mb-3" onClick={() => this.onBtnEditImageLanggananClick(this.state.selectedProduct.id)} />
+                                                                            <input type="button" value="Upload New Image" className="btn btn-info btn-block mb-3" onClick={() => this.onBtnEditImageLanggananClick(this.state.selectedProduct.id)} />
                                                                         }
                                                                         </>
                                                                     }
