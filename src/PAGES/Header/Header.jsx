@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Navbar, Form, FormControl, Button, OverlayTrigger, Tooltip, Image} from "react-bootstrap"
-import { faBell, faSignOutAlt, faSearch, faEnvelope} from "@fortawesome/free-solid-svg-icons"
+import {Navbar, OverlayTrigger, Tooltip, Image} from "react-bootstrap"
+import { faBell, faSignOutAlt} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {userLogout, hitungConfirmation} from '../../REDUX/Action/userAction'
 import Logo from '../../IMG/Logo/Chew and Cheer blue_1.jpg'
@@ -47,19 +47,18 @@ class Header extends Component {
         return (
             <Navbar style={{background: "#0000fe", height: this.state.height, transition: this.state.transition}} sticky="top">
                 <Navbar.Brand><b className="text-white">WELCOME ADMIN &nbsp; | </b><Image src={this.state.imageBrand} alt='LogoNormal' fluid className="link-logo"/></Navbar.Brand>
-                    <Form inline className="ml-auto">
+                    {/* <Form inline className="ml-auto">
                         <FormControl type="text" placeholder="Search" className="mr-2"/>
                         <Button variant="light"><FontAwesomeIcon icon={faSearch} /></Button>
-                    </Form>
-                <div>
-                    <OverlayTrigger placement="bottom" delay={{ show: 100, hide: 200 }} overlay={<Tooltip id="tooltip-bottom">Inbox</Tooltip>}>
+                    </Form> */}
+                <div className="ml-auto">
+                    {/* <OverlayTrigger placement="bottom" delay={{ show: 100, hide: 200 }} overlay={<Tooltip id="tooltip-bottom">Inbox</Tooltip>}>
                         <Link to="/message" className="text-dark">
                             <span className="ml-3 mr-2 fa-stack">
-                            {/* <span className="ml-3 mr-2 fa-stack" data-count={this.props.jumlahConfirm}> */}
                                 <FontAwesomeIcon icon={faEnvelope} className="text-white fa-stack-2x"/>
                             </span>
                         </Link>
-                    </OverlayTrigger>
+                    </OverlayTrigger> */}
                     <OverlayTrigger placement="bottom" delay={{ show: 100, hide: 200 }} overlay={<Tooltip id="tooltip-bottom">{this.props.jumlahConfirm} Notification</Tooltip>}>
                         <Link to="/confirmation" className="text-dark">
                             {
