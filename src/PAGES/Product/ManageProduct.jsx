@@ -170,8 +170,8 @@ class LanggananAdmin extends Component {
         this.setState({onBtnSaveUpdateClick: true})
        var obj = {
            namaPaket: this.state.inputNamaPaketEdit ? this.state.inputNamaPaketEdit : objSelected.namaPaket,
-           harga: this.state.inputHargaEdit ? parseInt(this.state.inputHargaEdit) : objSelected.harga,
-           discount: this.state.inputDiscountEdit ? parseInt(this.state.inputDiscountEdit) : objSelected.discount,
+           harga: this.state.inputHargaEdit ? this.state.inputHargaEdit : objSelected.harga,
+           discount: this.state.inputDiscountEdit ? this.state.inputDiscountEdit : objSelected.discount,
            deskripsi: this.state.inputDeskripsiEdit ? this.state.inputDeskripsiEdit : objSelected.deskripsi,
            kategori: this.refs.inputKategori.value,
            imagePath: objSelected.imagePath   
@@ -565,11 +565,11 @@ class LanggananAdmin extends Component {
                                             </div>
                                             <div className="col-6 col-md-4">
                                                 <label htmlFor="inputPlaceholderEx1">Price</label>
-                                                <input placeholder={this.state.selectedProduct.harga} type="number" id="inputPlaceholderEx1" className="form-control" onChange={(e)=> this.setState({inputHargaEdit: parseInt(e.target.value)})}/>
+                                                <input placeholder={this.state.selectedProduct.harga} type="number" id="inputPlaceholderEx1" className="form-control" onChange={(e)=> this.setState({inputHargaEdit: e.target.value})}/>
                                             </div>
                                             <div className="col-6 col-md-4">
                                                 <label htmlFor="inputPlaceholderEx2">Discount</label>
-                                                <input placeholder={this.state.selectedProduct.discount} type="number" id="inputPlaceholderEx2" className="form-control" onChange={(e) => this.setState({inputDiscountEdit: e.target.value})}/>
+                                                <input placeholder={this.state.selectedProduct.discount} type="number" id="inputPlaceholderEx2" className="form-control" onInput={(e) => e.target.value = e.target.value.slice(0, 2)} onChange={(e) => this.setState({inputDiscountEdit: e.target.value})}/>
                                             </div>
                                         </div>
                                         <div className="row mb-4 ml-3 mr-4">

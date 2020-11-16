@@ -66,8 +66,8 @@ class ManagePaketBaru extends Component {
                 }
                 data = {
                     namaPaket: this.state.inputNamaPaketAdd,
-                    harga: parseInt(this.state.inputHargaAdd),
-                    discount: parseInt(this.state.inputDiscountAdd),
+                    harga: this.state.inputHargaAdd,
+                    discount: this.state.inputDiscountAdd,
                     deskripsi: this.state.inputDeskripsiAdd,
                     imagePath: this.state.imageLanggananAdd,
                     kategori: this.refs.inputKategori.value,
@@ -114,8 +114,8 @@ class ManagePaketBaru extends Component {
                 
                 data = {
                     namaPaket: this.state.inputNamaPaketAdd,
-                    harga: parseInt(this.state.inputHargaAdd),
-                    discount: parseInt(this.state.inputDiscountAdd),
+                    harga: this.state.inputHargaAdd,
+                    discount: this.state.inputDiscountAdd,
                     deskripsi: this.state.inputDeskripsiAdd,
                     kategori: this.refs.inputKategori.value,
                     Menu: this.state.inputNamaMenuBaru,
@@ -181,11 +181,11 @@ class ManagePaketBaru extends Component {
                                         </div>
                                         <div className="col-6 col-md-4">
                                             <label htmlFor="inputPriceProduct">Price</label>
-                                            <input placeholder="Input Package Price" type="number" id="inputProduct2" className="form-control" onChange={(e)=> this.setState({inputHargaAdd: parseInt(e.target.value)})}/>
+                                            <input placeholder="Input Package Price" type="number" id="inputProduct2" className="form-control" onChange={(e)=> this.setState({inputHargaAdd: e.target.value})}/>
                                         </div>
                                         <div className="col-6 col-md-4">
                                             <label htmlFor="inputDiscountProduct">Discount (in percentage)</label>
-                                            <input placeholder="Input Package Discount (optional)" type="number" id="inputProduct3" className="form-control" onChange={(e) => this.setState({inputDiscountAdd: e.target.value})}/>
+                                            <input placeholder="Input Package Discount (optional)" type="number" id="inputProduct3" className="form-control" onInput={(e) => e.target.value = e.target.value.slice(0, 2)} onChange={(e) => this.setState({inputDiscountAdd: e.target.value})}/>
                                         </div>
                                     </div>
                                     <div className="row justify-content-center mt-4">

@@ -54,7 +54,7 @@ class User extends Component {
                 <tr key={val.UserId} className='text-dark'>
                     <td>{val.username}</td>
                     <td>{val.UserId}</td>
-                    <td>Rp. {new Intl.NumberFormat('id-ID').format(val.TotalBelanjaan)}</td>
+                    <td>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(val.TotalBelanjaan)}</td>
                     <td>{val.JumlahTransaksi}</td>
                 </tr>
             )
