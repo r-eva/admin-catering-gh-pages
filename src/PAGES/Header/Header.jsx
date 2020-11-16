@@ -5,8 +5,8 @@ import {Navbar, OverlayTrigger, Tooltip, Image} from "react-bootstrap"
 import { faBell, faSignOutAlt} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {userLogout, hitungConfirmation} from '../../REDUX/Action/userAction'
-import Logo from '../../IMG/Logo/Chew and Cheer blue_1.jpg'
-import LogoScroll from '../../IMG/Logo/Chew and Cheer blue_2.jpg'
+import Logo from '../../IMG/Logo/Chew and Cheer blue_11.jpg'
+import LogoScroll from '../../IMG/Logo/Chew and Cheer blue_21.jpg'
 import './Header.css'
 
 class Header extends Component {
