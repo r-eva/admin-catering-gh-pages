@@ -18,7 +18,7 @@ class Navbar extends Component {
                     <Nav.Link as = {Link} to="/order" className="text-white mx-2"><FontAwesomeIcon icon={faCreditCard} size="lg" className="mr-2"/> Order</Nav.Link><hr className="bg-secondary mx-4"/>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as = {Link} to="/product" className="text-white mx-2"><FontAwesomeIcon icon={faUtensils} size="lg" className="mr-2"/>  Product</Nav.Link><hr className="bg-secondary mx-4"/>
+                    <Nav.Link as = {Link} to="/product" className="text-white mx-2"><FontAwesomeIcon icon={faUtensils} size="lg" className="mr-2"/> Products</Nav.Link><hr className="bg-secondary mx-4"/>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link as = {Link} to="/user" className="text-white mx-2"><FontAwesomeIcon icon={faUsers} size="lg" className="mr-2"/> User</Nav.Link><hr className="bg-secondary mx-4"/>
