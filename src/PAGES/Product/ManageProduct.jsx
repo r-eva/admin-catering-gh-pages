@@ -509,6 +509,24 @@ class LanggananAdmin extends Component {
     return jsx
     }
 
+    ///////////////////////////////////////////////////////////// Handle Image Error ////////////////////////////////////////////////////
+
+
+    imageError = (image) => {
+        image.onerror = ""
+        image.target.src = `${urlApi}/images/ImageError/Explanation.png`
+        this.setState({erorImage: `${urlApi}/images/ImageError/Explanation.png`, imageStatus: 'null'})
+        return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    imageError = (image) => {
+        image.onerror = ""
+        image.target.src = `${urlApi}/images/ImageError/Explanation.png`
+        return true;
+    }
+
     render() {
         return (
             <div className="background-main-admin">
@@ -578,7 +596,7 @@ class LanggananAdmin extends Component {
                                                     <div className="col-12">
                                                         <img src={`${urlApi}${this.state.selectedProduct.imagePath}`} style={{
                                                             width:'450px', height: '300px', borderRadius: '4px',
-                                                        }} alt='Img produk masih kosong' className='img-fluid'></img>
+                                                        }} onError={(e) => this.imageError(e)} alt='Img produk masih kosong' className='img-fluid'></img>
                                                     </div> 
                                                 </div>
                                                 <div className="row">

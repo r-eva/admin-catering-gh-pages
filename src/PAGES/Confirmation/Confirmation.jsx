@@ -5,6 +5,7 @@ import swal from 'sweetalert'
 import {connect} from 'react-redux'
 import {hitungConfirmation} from '../../REDUX/Action/userAction'
 import {Table, Modal, Button} from 'react-bootstrap'
+import './Confirmation.css'
 
 class Confirmation extends Component {
 
@@ -13,7 +14,9 @@ class Confirmation extends Component {
         historyDetail: [],
         modalShow: false,
         confirmPembayaranClicked: false,
-        rejectPembayaranClicked: false
+        rejectPembayaranClicked: false,
+        erorImage: '',
+        imageStatus: 'exist'
     }
 
     componentDidMount(){
@@ -36,10 +39,14 @@ class Confirmation extends Component {
         })
     }
 
-    getDetailHistory = (idHistory) => {
+    getDetailHistory = (idHistory, path) => {
         Axios.get(urlApi + `history/getHistoryDetailById/` + idHistory)
             .then((res)=>{
-                this.setState({historyDetail: res.data, modalShow: true})       
+                if (this.state.erorImage !== '') {
+                    this.setState({historyDetail: res.data, modalShow: true})
+                } else {
+                    this.setState({historyDetail: res.data, modalShow: true, erorImage: `${urlApi}${path}`})
+                }      
             })
             .catch((err) => {
                 console.log(err)
@@ -51,9 +58,12 @@ class Confirmation extends Component {
 
     confirmPembayaran = (id) => {
         this.setState({confirmPembayaranClicked: true})
-        Axios.put(urlApi + 'admin/confirmPembayaran/' + id)
+        var obj = {
+            idHistory: id,
+            statusImage: this.state.imageStatus
+        }
+        Axios.put(urlApi + 'admin/confirmPembayaran', obj)
         .then((res)=>{
-            // window.location.reload()
             this.getDataTransaksiMenunggu()
             this.props.hitungConfirmation()
             swal ('Transaction confirmed!', `Please check list of order.`, 'success')
@@ -66,9 +76,12 @@ class Confirmation extends Component {
 
     rejectPembayaran = (id) => {
         this.setState({rejectPembayaranClicked: true})
-        Axios.put(urlApi + 'admin/rejectPembayaran/' + id)
+        var obj = {
+            idHistory: id,
+            statusImage: this.state.imageStatus
+        }
+        Axios.put(urlApi + 'admin/rejectPembayaran', obj)
         .then((res)=>{
-            // window.location.reload()
             this.getDataTransaksiMenunggu()
             this.props.hitungConfirmation()
             swal({
@@ -83,6 +96,15 @@ class Confirmation extends Component {
     }
 
 
+    //////////////////////////////////////////////// IMAGE ERROR //////////////////////////////////////////////////
+
+    imageError = (image) => {
+        image.onerror = ""
+        image.target.src = `${urlApi}/images/ImageError/Explanation.png`
+        this.setState({erorImage: `${urlApi}/images/ImageError/Explanation.png`, imageStatus: 'null'})
+        return true;
+    }
+
     //////////////////////////////////////////////// RENDER FUNCTION //////////////////////////////////////////////
 
     renderTransaksiMenunggu = () => {
@@ -92,9 +114,8 @@ class Confirmation extends Component {
                     <td>{val.UserId}/{val.username}</td>
                     <td>{val.TanggalTransaksi}</td>
                     <td>{val.TotalBelanja}</td>
-                    <td><a href={`${urlApi}${val.buktiPembayaranPath}`}><img src={`${urlApi}${val.buktiPembayaranPath}`} style={{
-                            width:'70px', height: '70px', borderRadius: '4px', padding: '5px'
-                            }} alt='Cannot Get Transfer Proof'></img></a>
+                    <td><img src={`${urlApi}${val.buktiPembayaranPath}`} style={{width:'70px',height: '70px', borderRadius: '4px', padding: '5px'}}
+                        onError={(e) => this.imageError(e)} alt='Cannot Get Transfer Proof'></img>
                     </td>
                     {
                             this.state.modalShow === true 
@@ -113,7 +134,7 @@ class Confirmation extends Component {
                                 )}
                             </>
                             :
-                            <td><input type="button" value="DETAIL" className="btn btn-info btn-block" onClick={() => this.getDetailHistory(val.id)}/></td>
+                            <td><input type="button" value="DETAIL" className="btn btn-info btn-block" onClick={() => this.getDetailHistory(val.id, val.buktiPembayaranPath)}/></td>
                     }
                     {
                         this.state.confirmPembayaranClicked || this.state.rejectPembayaranClicked
@@ -167,6 +188,12 @@ class Confirmation extends Component {
                         {this.renderHistoryDetail()}
                     </tbody>
                 </Table>
+                <h6 className="font-weight-bold">Proof of Payment:</h6>
+                <center>
+                    <a href={this.state.erorImage}>
+                    <img src={this.state.erorImage} alt="img error" style={{width:'50%',height: '50%', borderRadius: '4px', padding: '5px'}}/>
+                    </a>
+                </center>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}>CLOSE</Button>
