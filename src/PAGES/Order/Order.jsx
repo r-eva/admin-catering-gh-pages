@@ -100,20 +100,31 @@ class Order extends Component {
             centered
           >
             <Modal.Header closeButton className="bg-primary" >
-              <Modal.Title>
-                <p className="font font-weight-bold">DETAIL PESANAN</p>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <p className="font font-weight-bold">ORDER DETAIL</p>
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p> Username: {this.state.detailPesananDipilih.username} <br/>
-                    Package Name: {this.state.detailPesananDipilih.namaPaket} <br/>
-                    Qty: {this.state.detailPesananDipilih.JumlahBox} <br/>
-                    Start Date: {this.state.detailPesananDipilih.TanggalMulai} <br/>
-                    End Date: {this.state.detailPesananDipilih.TanggalBerakhir} <br/>
-                    Recipient's Name: {this.state.detailPesananDipilih.NamaPenerima} <br/>
-                    Address: {this.state.detailPesananDipilih.AlamatPenerima} <br/>
-                    Postal Code: {this.state.detailPesananDipilih.KodePosPenerima}
-                </p>
+                <Table striped bordered hover className="text-center">
+                    <thead style={{backgroundColor: '#60217B'}} className="text-center text-white">
+                        <tr>
+                            <td>Username</td>
+                            <td>Package</td>
+                            <td>Qty</td>
+                            <td>Recipient's Name</td>
+                            <td>Address</td>
+                            <td>Postal Code</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>{this.state.detailPesananDipilih.username}</td>
+                        <td>{this.state.detailPesananDipilih.namaPaket}</td>
+                        <td>{this.state.detailPesananDipilih.JumlahBox}</td>
+                        <td>{this.state.detailPesananDipilih.NamaPenerima}</td>
+                        <td>{this.state.detailPesananDipilih.AlamatPenerima}</td>
+                        <td>{this.state.detailPesananDipilih.KodePosPenerima}</td>
+                    </tr>
+                </Table>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}>CLOSE</Button>
