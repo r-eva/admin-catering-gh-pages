@@ -109,6 +109,7 @@ class Confirmation extends Component {
 
     renderTransaksiMenunggu = () => {
         var jsx = this.state.listTransaksiMenunggu.map(val => {
+            console.log(this.state.listTransaksiMenunggu.val)
             return (
                 <tr key={val.id} className='text-dark text-center' style={{cursor: 'pointer'}}>
                     <td>{val.UserId}/{val.username}</td>
@@ -180,7 +181,6 @@ class Confirmation extends Component {
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Duration</th>
-                        <th>Total</th>
                         <th>Delivery</th>
                         </tr>
                     </thead>
@@ -205,7 +205,7 @@ class Confirmation extends Component {
     renderHistoryDetail = () => {
         var jsx = this.state.historyDetail.map((val, idx) => {
             return (
-                    <tr key = {val.id}>
+                    <tr key = {val.id} className="text-center">
                         <td>{idx + 1 }</td>
                         <td>{val.namaPaket}</td>
                         <td>{val.harga}</td>
@@ -214,7 +214,6 @@ class Confirmation extends Component {
                         <td>{val.TanggalMulai.slice(0, 10)}</td>
                         <td>{val.TanggalBerakhir.slice(0, 10)}</td>
                         <td>{val.Durasi}</td>
-                        <td>{val.Durasi * val.JumlahBox * (val.harga - (val.harga * val.discount/100))}</td>
                         <td>{val.AlamatPenerima}</td>
                     </tr>
                     )
