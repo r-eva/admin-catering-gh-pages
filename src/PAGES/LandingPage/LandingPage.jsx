@@ -152,7 +152,7 @@ class LandingPage extends Component {
                                                 </div>
                                                 <div className="col-6">
                                                     {
-                                                        moment().add(this.state.tanggalDitambahkan, 'days').format("D") === `${moment().daysInMonth()}`
+                                                        moment().add(this.state.tanggalDitambahkan, 'days').format("D") === `${moment().daysInMonth()}` || this.state.tanggalDitambahkan + 3 >= this.state.allJadwalLangganan.length 
                                                         ?
                                                         <button className="btn btn-dark btn-block p-1 m-0" disabled>Next</button>
                                                         :
