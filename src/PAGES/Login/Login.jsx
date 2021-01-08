@@ -77,23 +77,23 @@ class Login extends Component {
                             </InputGroup.Prepend>
                             <FormControl placeholder="Password" type="password" onChange={(e) => this.setState({inputPassword: e.target.value})}/>
                         </InputGroup>
+                        <div className="text-center mt-1 mb-1 text-danger">
+                            {
+                                this.props.loginForm.error
+                                ?
+                                <>
+                                    {this.props.loginForm.error}
+                                </>
+                                :
+                                <>
+                                    &nbsp;
+                                </>
+                            }
+                        </div>
+                        <div className="text-center mt-1">
+                            {this.renderButtonLogin()}
+                        </div>
                     </Form>
-                    <div className="text-center mt-1 mb-1 text-danger">
-                        {
-                            this.props.loginForm.error
-                            ?
-                            <>
-                                {this.props.loginForm.error}
-                            </>
-                            :
-                            <>
-                                &nbsp;
-                            </>
-                        }
-                    </div>
-                    <div className="text-center mt-1">
-                        {this.renderButtonLogin()}
-                    </div>
                 </Card.Body>
             </Card>
             <Card body className="d-lg-none">Please use a large device.</Card>
