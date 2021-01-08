@@ -25,7 +25,7 @@ class Login extends Component {
 
     renderButtonLogin = () => {
         if (!this.props.loginForm.loading) {
-            return <button type="button" className="btn btn-danger" onClick={this.onLoginBtnHandler}>SIGN IN</button>
+            return <button type="submit" className="btn btn-danger" onClick={this.onLoginBtnHandler}>SIGN IN</button>
         } else {
             return(
                 <>
