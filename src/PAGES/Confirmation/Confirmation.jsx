@@ -109,7 +109,6 @@ class Confirmation extends Component {
 
     renderTransaksiMenunggu = () => {
         var jsx = this.state.listTransaksiMenunggu.map(val => {
-            console.log(this.state.listTransaksiMenunggu.val)
             return (
                 <tr key={val.id} className='text-dark text-center' style={{cursor: 'pointer'}}>
                     <td>{val.UserId}/{val.username}</td>

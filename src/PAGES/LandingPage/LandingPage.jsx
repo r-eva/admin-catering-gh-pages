@@ -65,7 +65,6 @@ class LandingPage extends Component {
                                 }
                             }
                         }
-
                         this.setState({allJadwalLangganan: ubahJadwal})
                     }
                 }).catch(err => {
@@ -79,6 +78,7 @@ class LandingPage extends Component {
     }
 
     cekHari = () => {
+        console.log(this.state.tanggalDitambahkan)
         if (moment().add(this.state.tanggalDitambahkan, 'days').format("dddd") === "Sunday") {
             this.setState({tanggalDitambahkan: this.state.tanggalDitambahkan + 1})
             return <h6>{moment().add(this.state.tanggalDitambahkan, 'days').format("D MMMM YYYY")}</h6>
@@ -152,7 +152,7 @@ class LandingPage extends Component {
                                                 </div>
                                                 <div className="col-6">
                                                     {
-                                                        moment().add(this.state.tanggalDitambahkan, 'days').format("D") === `${moment().daysInMonth()}` || this.state.tanggalDitambahkan + 3 >= this.state.allJadwalLangganan.length 
+                                                        moment().add(this.state.tanggalDitambahkan, 'days').format("D") === `${moment().daysInMonth()}` || this.state.tanggalDitambahkan + new Date().getDate() > moment().daysInMonth() 
                                                         ?
                                                         <button className="btn btn-dark btn-block p-1 m-0" disabled>Next</button>
                                                         :
