@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4cc509aeaab2a6e6e7f3dc58544363c4",
+    "revision": "da95df51955f42390b5531414a4c0b5a",
     "url": "/admin-catering-gh-pages/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin-catering-gh-pages/static/css/2.69121389.chunk.css"
   },
   {
-    "revision": "76322ee997ff067adcb2",
+    "revision": "593b0562c787252dd6cb",
     "url": "/admin-catering-gh-pages/static/css/main.8a688658.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/admin-catering-gh-pages/static/js/2.a87f698d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "76322ee997ff067adcb2",
-    "url": "/admin-catering-gh-pages/static/js/main.60704ddb.chunk.js"
+    "revision": "593b0562c787252dd6cb",
+    "url": "/admin-catering-gh-pages/static/js/main.1b9d7bf5.chunk.js"
   },
   {
     "revision": "6f09be05f5f14af2842a",
