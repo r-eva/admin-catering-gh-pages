@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/admin-catering-gh-pages/static/css/main.8a688658.chunk.css",
-    "main.js": "/admin-catering-gh-pages/static/js/main.e49e6b76.chunk.js",
-    "main.js.map": "/admin-catering-gh-pages/static/js/main.e49e6b76.chunk.js.map",
+    "main.js": "/admin-catering-gh-pages/static/js/main.8419be73.chunk.js",
+    "main.js.map": "/admin-catering-gh-pages/static/js/main.8419be73.chunk.js.map",
     "runtime-main.js": "/admin-catering-gh-pages/static/js/runtime-main.67a5c424.js",
     "runtime-main.js.map": "/admin-catering-gh-pages/static/js/runtime-main.67a5c424.js.map",
     "static/css/2.69121389.chunk.css": "/admin-catering-gh-pages/static/css/2.69121389.chunk.css",
     "static/js/2.a87f698d.chunk.js": "/admin-catering-gh-pages/static/js/2.a87f698d.chunk.js",
     "static/js/2.a87f698d.chunk.js.map": "/admin-catering-gh-pages/static/js/2.a87f698d.chunk.js.map",
     "index.html": "/admin-catering-gh-pages/index.html",
-    "precache-manifest.7e6271a829e81aea85254e20c98888c5.js": "/admin-catering-gh-pages/precache-manifest.7e6271a829e81aea85254e20c98888c5.js",
+    "precache-manifest.6b3fd276f786f2ad8f1db8612b675aee.js": "/admin-catering-gh-pages/precache-manifest.6b3fd276f786f2ad8f1db8612b675aee.js",
     "service-worker.js": "/admin-catering-gh-pages/service-worker.js",
     "static/css/2.69121389.chunk.css.map": "/admin-catering-gh-pages/static/css/2.69121389.chunk.css.map",
     "static/css/main.8a688658.chunk.css.map": "/admin-catering-gh-pages/static/css/main.8a688658.chunk.css.map",
@@ -23,6 +23,6 @@
     "static/css/2.69121389.chunk.css",
     "static/js/2.a87f698d.chunk.js",
     "static/css/main.8a688658.chunk.css",
-    "static/js/main.e49e6b76.chunk.js"
+    "static/js/main.8419be73.chunk.js"
   ]
 }
