@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Also the most suitable node version is v16.13.2
 
 ## Available Scripts
 
